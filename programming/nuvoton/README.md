@@ -7,7 +7,11 @@ The MCUs must be flashed with the same firmware, but their pinouts are different
 
 ## Hardware Requirements
 You will need a Nuvoton Nu-Link-Pro in order to program the MCUs. Normal serial adapters will not work.
+![Nu-Link-Pro](nuvoton_nulinkpro.jpg)
 
+## Connecting the Nu-Link-Pro
+To make the connection for programming the MCUs, use this header:
+![Nu-Link-Pinout](nuvoton_pinout.jpg)
 
 ## Dependencies
 
