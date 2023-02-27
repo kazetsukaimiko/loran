@@ -35,8 +35,8 @@ int main(void) {
 
 int main( int argc, char **argv) {
     UNITY_BEGIN();
-  RUN_TEST(test_function_should_doBlahAndBlah);
-  RUN_TEST(test_function_should_doAlsoDoBlah);
+    RUN_TEST(test_function_should_doBlahAndBlah);
+    RUN_TEST(test_function_should_doAlsoDoBlah);
     UNITY_END();
 }
 
