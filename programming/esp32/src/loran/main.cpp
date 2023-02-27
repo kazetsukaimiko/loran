@@ -1,24 +1,9 @@
 #include <Arduino.h>
 #include "Wire.h"
 #include <WiFi.h>
+#include <LoranTypes.h>
 
-#define NuvoA (0xB4 >> 1)   // root address, second unit is at 0xB6.  Note that the Wire library has a 0-7F range, not a skipped 0-FF range.
-#define NuvoB (0xB6 >> 1)
 
-typedef union {
-	struct {
-		unsigned char P1 :1;
-		unsigned char P2 :1;
-		unsigned char P3 :1;
-		unsigned char P4 :1;
-		unsigned char P5 :1;
-		unsigned char P6 :1;
-		unsigned char Px :2;
-	};
-	struct {
-		unsigned char All;
-	};
-} chBitflags;
 
 unsigned int ADCVals_A[15], ADCVals_B[15];			// ADC readings
 unsigned char Breakers_A[6];			// maximum current limits (high 8 bits only)
@@ -31,10 +16,37 @@ chBitflags hatDigitalDir_A;					// sets pins between digital push-pull and digit
 chBitflags hatAnalogInput_A;					// sets pins between analog inputs and digital-capable
 
 unsigned char I2CWriteByte(unsigned char SlaveID, unsigned char Address, unsigned char Data);
+boolean downButton();
+boolean upButton();
+
+
+// Environment variables?
+/*
+#ifdef LORAN_WIFI_SSID
+    String LORAN_WIFI_SSID="${LORAN_WIFI_SSID}";
+#else
+	String LORAN_WIFI_SSID="loran_board";
+#endif
+
+#ifdef LORAN_WIFI_PASS
+    String LORAN_WIFI_PASS="${LORAN_WIFI_PASS}";
+#else
+	String LORAN_WIFI_PASS="loran_password";
+#endif
+*/
+
 
 
 void setup() {
-	WiFi.mode(WIFI_OFF);
+	if (downButton()) {
+		WiFi.mode(WIFI_OFF);
+	} else if (upButton()) {
+		WiFi.mode(WIFI_AP);
+		// AP init logic
+	} else {
+		WiFi.mode(WIFI_STA);
+		// Client logic
+	}
 
 	// T.M.L 2023-02-11: manually specify GPIO3 and GPIO20 for serial comm.  Something of this sort
 	//is required, in order to release the I2C ("Wire") GPIOs for use there.
@@ -139,4 +151,18 @@ unsigned char I2CWriteByte(unsigned char SlaveID, unsigned char Address, unsigne
 	Wire.write(Data);
 	Wire.endTransmission();
 	return 0;
+}
+
+
+
+
+boolean downButton() 
+{
+	return true; // TODO actually check if the button is depressed
+}
+
+
+boolean upButton() 
+{
+	return true; // TODO actually check if the button is depressed
 }
