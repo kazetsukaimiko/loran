@@ -1,5 +1,6 @@
 #include "unity.h"
 #include "RTOSEvent.h"
+#include <FreeRTOS.h>
 
 void setUp(void) {
   // set stuff up here
@@ -9,8 +10,15 @@ void tearDown(void) {
   // clean stuff up here
 }
 
-void test_function_should_doBlahAndBlah(void) {
+void testEventsGetProcessed(void) {
   // test stuff
+
+  struct Event e;
+  e.source = 
+
+  // Assign a value to the string using the strcpy function
+  strcpy(e.myString, "Some text");
+  fireEvent();
 }
 
 void test_function_should_doAlsoDoBlah(void) {
@@ -19,8 +27,13 @@ void test_function_should_doAlsoDoBlah(void) {
 
 int runUnityTests(void) {
   UNITY_BEGIN();
+  startEventWorker();
+  vTaskStartScheduler(); 
+
   RUN_TEST(test_function_should_doBlahAndBlah);
   RUN_TEST(test_function_should_doAlsoDoBlah);
+
+
   return UNITY_END();
 }
 
